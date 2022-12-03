@@ -107,10 +107,13 @@ class Engine(Enum):
     def search(self, query, open_web=False, copy_url=False, additional_queries: dict = None):
         url = self.value.format(query=quote(query, safe=""))
         if additional_queries:
-            url += ("?" if "?" not in self.value.split("/")[-1] else "&") + "&".join(
-                query + "=" + quote(query_val)
+            url += (
+                "?" if "?" not in self.value.split("/")[-1] else "&"
+            ) + "&".join(
+                f"{query}={quote(query_val)}"
                 for query, query_val in additional_queries.items()
             )
+
         if open_web is True:
             open_new_tab(url)
 
